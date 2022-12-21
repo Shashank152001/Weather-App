@@ -1,0 +1,95 @@
+<!--Input City Name Div-->
+<div *ngIf="isShowCity"  class="parent-div">
+    <div class="card-div">
+      <h3 class="p-4 text-dark">Weather App Angular</h3>
+      <div style="border-top: 2px solid #dfdfdf ;"></div>
+      <div class="input-field p-4">
+        <!-- <button *ngIf="showDetailsBtn" class="details-btn">Getting weather details...</button> -->
+        <img src="assets/loader.gif" width="300" alt="" class="img-fluid mx-auto d-block" *ngIf="showDetailsBtn">
+        <input #city type="text" placeholder="Enter city name" class="form-control fs-4 text-center">
+          <button (click)="getDetailsByName(city.value)" class="btn btn-outline-dark form-control mt-2 fs-4">Show Temperature</button>
+          <div class="text-center">
+            <span class="text-center fs-4"> Or </span>
+          </div>
+        <button class="btn btn-outline-dark fs-4 form-control" (click)="getDetailsByCoords()">Temperature by Location</button>
+      </div>
+    </div>
+  </div>
+  
+  <!--Weather Info Div-->
+  <div *ngIf="!isShowCity" class="parent-div">
+    <div class="card-div">
+      <h3 class="p-4 text-dark">
+        <a href=""><svg (click)="navigateToCity()" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left text-dark" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg></a>
+        
+        Weather App Angular
+      </h3>
+      <div style="border-top: 2px solid #ddd ;"></div>
+      <br>
+      <div class="details-div">
+        <div class="weather-details">
+          <img src="assets/weather.png" width="200">
+        </div>
+        <div class="temp-div mt-1">
+          <h1 style="text-align: center;">{{this.temperature}} <sup>°</sup> C</h1>
+          <h4 class="mt-1" style="text-align: center;">{{this.weatherDescription| titlecase}}</h4>
+        </div>
+        <div class="location-div mb-2">
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+              <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+              <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+            {{this.cityName}}
+          </p>
+        </div>
+      </div>
+      <div class="temperature-div">
+        <div class="temperature-details p-3 text-center" style="border-right: 2px solid #ddd; width: 50%;border-top: 2px solid #ddd">
+          <a class="text-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-thermometer-sun" viewBox="0 0 16 16">
+              <path d="M5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585A1.5 1.5 0 0 1 5 12.5z"/>
+              <path d="M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1zm5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm4.243 1.757a.5.5 0 0 1 0 .707l-.707.708a.5.5 0 1 1-.708-.708l.708-.707a.5.5 0 0 1 .707 0zM8 5.5a.5.5 0 0 1 .5-.5 3 3 0 1 1 0 6 .5.5 0 0 1 0-1 2 2 0 0 0 0-4 .5.5 0 0 1-.5-.5zM12.5 8a.5.5 0 0 1 .5-.5h1a.5.5 0 1 1 0 1h-1a.5.5 0 0 1-.5-.5zm-1.172 2.828a.5.5 0 0 1 .708 0l.707.708a.5.5 0 0 1-.707.707l-.708-.707a.5.5 0 0 1 0-.708zM8.5 12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+          </a>
+          <span>{{this.feelsTemperature}} <sup>° </sup>C</span><br>
+          <span class="ms-5">Feels like</span>
+        </div>
+        <div class="fumidity-div p-3 text-center" style="width: 50%;border-top: 2px solid #dfdfdf">
+          <a class="text-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-thermometer-sun" viewBox="0 0 16 16">
+              <path d="M5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585A1.5 1.5 0 0 1 5 12.5z"/>
+              <path d="M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1zm5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm4.243 1.757a.5.5 0 0 1 0 .707l-.707.708a.5.5 0 1 1-.708-.708l.708-.707a.5.5 0 0 1 .707 0zM8 5.5a.5.5 0 0 1 .5-.5 3 3 0 1 1 0 6 .5.5 0 0 1 0-1 2 2 0 0 0 0-4 .5.5 0 0 1-.5-.5zM12.5 8a.5.5 0 0 1 .5-.5h1a.5.5 0 1 1 0 1h-1a.5.5 0 0 1-.5-.5zm-1.172 2.828a.5.5 0 0 1 .708 0l.707.708a.5.5 0 0 1-.707.707l-.708-.707a.5.5 0 0 1 0-.708zM8.5 12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+          </a>
+          <span>{{this.humidity}}%</span><br>
+          <span class="ms-5">Humidity</span>
+        </div>
+      </div>
+      <div class="temperature-div">
+        <div class="temperature-details p-3 text-center" style="border-right: 2px solid #ddd; width: 50%;border-top: 2px solid #ddd">
+          <a class="text-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-thermometer-high" viewBox="0 0 16 16">
+              <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585a1.5 1.5 0 0 1 1 1.415z"/>
+              <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+            </svg>
+          </a>
+          <span>{{this.temperature_max}} <sup>° </sup>C</span><br>
+          <span class="ms-5">Max Temp</span>
+        </div>
+        <div class="fumidity-div p-3 text-center" style="width: 50%;border-top: 2px solid #dfdfdf">
+          <a class="text-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-thermometer-low" viewBox="0 0 16 16">
+              <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V9.5a.5.5 0 0 1 1 0v1.585a1.5 1.5 0 0 1 1 1.415z"/>
+              <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z"/>
+            </svg>
+          </a>
+          <span>{{this.temperature_min}} <sup>° </sup>C</span><br>
+          <span class="ms-5">Min Temp</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
